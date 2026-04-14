@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 750" font-family="Arial, sans-serif">
+  <defs>
+    <style>
+      .frame { fill: #FFF; stroke: #CCC; stroke-width: 2; }
+      .header-bg { fill: #1B4F72; }
+      .nav-text { font-size: 13px; fill: #FFF; }
+      .h1 { font-size: 20px; fill: #1B4F72; font-weight: bold; }
+      .h2 { font-size: 15px; fill: #2E75B6; font-weight: bold; }
+      .body { font-size: 12px; fill: #555; }
+      .btn { rx: 6; }
+      .btn-primary { fill: #1B4F72; }
+      .btn-text { font-size: 12px; fill: #FFF; text-anchor: middle; font-weight: bold; }
+      .card { fill: #F8FBFE; stroke: #D6EAF8; stroke-width: 1.5; rx: 8; }
+      .wireframe-label { font-size: 18px; fill: #1B4F72; font-weight: bold; text-anchor: middle; }
+      .score-big { font-size: 48px; fill: #27AE60; font-weight: bold; text-anchor: middle; }
+      .score-label { font-size: 13px; fill: #888; text-anchor: middle; }
+      .progress-bg { fill: #EEE; rx: 6; }
+      .progress-fill { fill: #27AE60; rx: 6; }
+      .stat-num { font-size: 22px; fill: #1B4F72; font-weight: bold; text-anchor: middle; }
+      .stat-label { font-size: 11px; fill: #888; text-anchor: middle; }
+      .table-header { fill: #1B4F72; }
+      .table-header-text { font-size: 11px; fill: #FFF; font-weight: bold; }
+      .table-row { fill: #F8FBFE; stroke: #E8E8E8; stroke-width: 0.5; }
+      .table-row-alt { fill: #FFF; stroke: #E8E8E8; stroke-width: 0.5; }
+      .table-text { font-size: 11px; fill: #333; }
+      .status-actif { fill: #E74C3C; rx: 8; }
+      .status-dormant { fill: #F39C12; rx: 8; }
+      .status-supprime { fill: #27AE60; rx: 8; }
+      .status-text { font-size: 9px; fill: #FFF; text-anchor: middle; font-weight: bold; }
+      .footer-bg { fill: #F4F6F6; }
+      .footer-text { font-size: 10px; fill: #999; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <text x="350" y="20" class="wireframe-label">Wireframe — Tableau de bord utilisateur</text>
+
+  <rect x="30" y="35" width="640" height="700" class="frame"/>
+
+  <!-- Header -->
+  <rect x="30" y="35" width="640" height="50" class="header-bg"/>
+  <text x="55" y="66" class="nav-text" font-weight="bold" font-size="15">Poids Mort Numérique</text>
+  <text x="440" y="66" class="nav-text">Tableau de bord</text>
+  <text x="560" y="66" class="nav-text">Mon profil</text>
+  <text x="635" y="66" class="nav-text">↪</text>
+
+  <!-- Welcome -->
+  <text x="55" y="115" class="h1">Bonjour, pseudo_utilisateur</text>
+
+  <!-- Score card -->
+  <rect x="55" y="135" width="280" height="140" class="card"/>
+  <text x="195" y="170" class="score-big">72%</text>
+  <text x="195" y="190" class="score-label">Score de sobriété</text>
+  <rect x="95" y="205" width="200" height="14" class="progress-bg"/>
+  <rect x="95" y="205" width="144" height="14" class="progress-fill"/>
+  <text x="195" y="245" class="body" text-anchor="middle">~18 kWh/an économisés</text>
+
+  <!-- Stats cards -->
+  <rect x="355" y="135" width="95" height="70" class="card"/>
+  <text x="402" y="172" class="stat-num">12</text>
+  <text x="402" y="190" class="stat-label">Actifs</text>
+
+  <rect x="462" y="135" width="95" height="70" class="card"/>
+  <text x="509" y="172" class="stat-num" fill="#F39C12">5</text>
+  <text x="509" y="190" class="stat-label">Dormants</text>
+
+  <rect x="568" y="135" width="95" height="70" class="card"/>
+  <text x="615" y="172" class="stat-num" fill="#27AE60">8</text>
+  <text x="615" y="190" class="stat-label">Supprimés</text>
+
+  <!-- Add button -->
+  <rect x="355" y="220" width="308" height="36" class="btn btn-primary"/>
+  <text x="509" y="243" class="btn-text">+ Ajouter un service</text>
+
+  <!-- Filter -->
+  <text x="55" y="310" class="h2">Mes services</text>
+  <text x="200" y="310" class="body">Filtrer : </text>
+  <text x="245" y="310" class="body" fill="#1B4F72" font-weight="bold">Tous</text>
+  <text x="280" y="310" class="body">| Actifs | Dormants | Supprimés</text>
+
+  <!-- Table -->
+  <rect x="55" y="325" width="590" height="28" class="table-header" rx="4"/>
+  <text x="70" y="343" class="table-header-text" fill="#FFF">Nom</text>
+  <text x="230" y="343" class="table-header-text" fill="#FFF">Catégorie</text>
+  <text x="370" y="343" class="table-header-text" fill="#FFF">Statut</text>
+  <text x="470" y="343" class="table-header-text" fill="#FFF">Dernière utilisation</text>
+  <text x="590" y="343" class="table-header-text" fill="#FFF">Actions</text>
+
+  <!-- Row 1 -->
+  <rect x="55" y="353" width="590" height="35" class="table-row"/>
+  <text x="70" y="375" class="table-text">Instagram</text>
+  <text x="230" y="375" class="table-text">Réseau social</text>
+  <rect x="360" y="363" width="55" height="18" class="status-actif"/>
+  <text x="387" y="376" class="status-text">ACTIF</text>
+  <text x="470" y="375" class="table-text">14/04/2026</text>
+  <text x="590" y="375" class="table-text" fill="#2E75B6">✏️ 🗑️</text>
+
+  <!-- Row 2 -->
+  <rect x="55" y="388" width="590" height="35" class="table-row-alt"/>
+  <text x="70" y="410" class="table-text">Dropbox</text>
+  <text x="230" y="410" class="table-text">Cloud</text>
+  <rect x="360" y="398" width="70" height="18" class="status-dormant"/>
+  <text x="395" y="411" class="status-text">DORMANT</text>
+  <text x="470" y="410" class="table-text">03/01/2024</text>
+  <text x="590" y="410" class="table-text" fill="#2E75B6">✏️ 🗑️</text>
+
+  <!-- Row 3 -->
+  <rect x="55" y="423" width="590" height="35" class="table-row"/>
+  <text x="70" y="445" class="table-text">MySpace</text>
+  <text x="230" y="445" class="table-text">Réseau social</text>
+  <rect x="360" y="433" width="75" height="18" class="status-supprime"/>
+  <text x="397" y="446" class="status-text">SUPPRIMÉ</text>
+  <text x="470" y="445" class="table-text">12/06/2015</text>
+  <text x="590" y="445" class="table-text" fill="#2E75B6">✏️ 🗑️</text>
+
+  <!-- Row 4 -->
+  <rect x="55" y="458" width="590" height="35" class="table-row-alt"/>
+  <text x="70" y="480" class="table-text">Netflix</text>
+  <text x="230" y="480" class="table-text">Streaming</text>
+  <rect x="360" y="468" width="55" height="18" class="status-actif"/>
+  <text x="387" y="481" class="status-text">ACTIF</text>
+  <text x="470" y="480" class="table-text">13/04/2026</text>
+  <text x="590" y="480" class="table-text" fill="#2E75B6">✏️ 🗑️</text>
+
+  <!-- Row 5 -->
+  <rect x="55" y="493" width="590" height="35" class="table-row"/>
+  <text x="70" y="515" class="table-text">Wish</text>
+  <text x="230" y="515" class="table-text">E-commerce</text>
+  <rect x="360" y="503" width="75" height="18" class="status-supprime"/>
+  <text x="397" y="516" class="status-text">SUPPRIMÉ</text>
+  <text x="470" y="515" class="table-text">22/11/2022</text>
+  <text x="590" y="515" class="table-text" fill="#2E75B6">✏️ 🗑️</text>
+
+  <!-- Pagination -->
+  <text x="280" y="555" class="body">← 1 2 3 →</text>
+
+  <!-- Footer -->
+  <rect x="30" y="695" width="640" height="40" class="footer-bg"/>
+  <text x="350" y="720" class="footer-text">Poids Mort Numérique — Poids de la page : ~15 Ko</text>
+</svg>

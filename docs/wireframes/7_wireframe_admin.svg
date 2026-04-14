@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 600" font-family="Arial, sans-serif">
+  <defs>
+    <style>
+      .frame { fill: #FFF; stroke: #CCC; stroke-width: 2; }
+      .header-bg { fill: #1B4F72; }
+      .nav-text { font-size: 13px; fill: #FFF; }
+      .h1 { font-size: 20px; fill: #1B4F72; font-weight: bold; }
+      .h2 { font-size: 15px; fill: #2E75B6; font-weight: bold; }
+      .body { font-size: 12px; fill: #555; }
+      .card { fill: #F8FBFE; stroke: #D6EAF8; stroke-width: 1.5; rx: 8; }
+      .wireframe-label { font-size: 18px; fill: #1B4F72; font-weight: bold; text-anchor: middle; }
+      .stat-num { font-size: 26px; fill: #1B4F72; font-weight: bold; text-anchor: middle; }
+      .stat-label { font-size: 11px; fill: #888; text-anchor: middle; }
+      .table-header { fill: #1B4F72; rx: 4; }
+      .table-header-text { font-size: 11px; fill: #FFF; font-weight: bold; }
+      .table-row { fill: #F8FBFE; stroke: #E8E8E8; stroke-width: 0.5; }
+      .table-row-alt { fill: #FFF; stroke: #E8E8E8; stroke-width: 0.5; }
+      .table-text { font-size: 11px; fill: #333; }
+      .footer-bg { fill: #F4F6F6; }
+      .footer-text { font-size: 10px; fill: #999; text-anchor: middle; }
+      .badge { rx: 8; }
+      .badge-text { font-size: 9px; fill: #FFF; text-anchor: middle; font-weight: bold; }
+    </style>
+  </defs>
+
+  <text x="350" y="20" class="wireframe-label">Wireframe — Gestion des utilisateurs (Admin)</text>
+
+  <rect x="30" y="35" width="640" height="550" class="frame"/>
+
+  <!-- Header -->
+  <rect x="30" y="35" width="640" height="50" class="header-bg"/>
+  <text x="55" y="66" class="nav-text" font-weight="bold" font-size="15">Poids Mort Numérique</text>
+  <text x="380" y="66" class="nav-text">Tableau de bord</text>
+  <text x="490" y="66" class="nav-text" font-weight="bold">Admin</text>
+  <text x="560" y="66" class="nav-text">Mon profil</text>
+  <text x="635" y="66" class="nav-text">↪</text>
+
+  <text x="55" y="115" class="h1">Administration</text>
+
+  <!-- Stats cards -->
+  <rect x="55" y="135" width="140" height="70" class="card"/>
+  <text x="125" y="170" class="stat-num">42</text>
+  <text x="125" y="190" class="stat-label">Utilisateurs</text>
+
+  <rect x="210" y="135" width="140" height="70" class="card"/>
+  <text x="280" y="170" class="stat-num">318</text>
+  <text x="280" y="190" class="stat-label">Services totaux</text>
+
+  <rect x="365" y="135" width="140" height="70" class="card"/>
+  <text x="435" y="170" class="stat-num" fill="#27AE60">127</text>
+  <text x="435" y="190" class="stat-label">Supprimés</text>
+
+  <rect x="520" y="135" width="140" height="70" class="card"/>
+  <text x="590" y="170" class="stat-num" fill="#27AE60">64%</text>
+  <text x="590" y="190" class="stat-label">Score moyen</text>
+
+  <!-- Users table -->
+  <text x="55" y="240" class="h2">Liste des utilisateurs</text>
+
+  <rect x="55" y="255" width="590" height="28" class="table-header"/>
+  <text x="70" y="273" class="table-header-text">Pseudo</text>
+  <text x="190" y="273" class="table-header-text">Email</text>
+  <text x="350" y="273" class="table-header-text">Inscrit le</text>
+  <text x="440" y="273" class="table-header-text">Services</text>
+  <text x="510" y="273" class="table-header-text">Rôle</text>
+  <text x="590" y="273" class="table-header-text">Actions</text>
+
+  <!-- Row 1 -->
+  <rect x="55" y="283" width="590" height="35" class="table-row"/>
+  <text x="70" y="305" class="table-text">alice_green</text>
+  <text x="190" y="305" class="table-text">alice@mail.com</text>
+  <text x="350" y="305" class="table-text">12/03/2026</text>
+  <text x="455" y="305" class="table-text" text-anchor="middle">14</text>
+  <rect x="500" y="293" width="40" height="18" class="badge" fill="#2E75B6"/>
+  <text x="520" y="306" class="badge-text">user</text>
+  <text x="590" y="305" class="table-text" fill="#2E75B6">👁️ ✏️ 🗑️</text>
+
+  <!-- Row 2 -->
+  <rect x="55" y="318" width="590" height="35" class="table-row-alt"/>
+  <text x="70" y="340" class="table-text">bob_42</text>
+  <text x="190" y="340" class="table-text">bob@efrei.net</text>
+  <text x="350" y="340" class="table-text">28/02/2026</text>
+  <text x="455" y="340" class="table-text" text-anchor="middle">8</text>
+  <rect x="500" y="328" width="40" height="18" class="badge" fill="#2E75B6"/>
+  <text x="520" y="341" class="badge-text">user</text>
+  <text x="590" y="340" class="table-text" fill="#2E75B6">👁️ ✏️ 🗑️</text>
+
+  <!-- Row 3 -->
+  <rect x="55" y="353" width="590" height="35" class="table-row"/>
+  <text x="70" y="375" class="table-text">charlie_dev</text>
+  <text x="190" y="375" class="table-text">charlie@mail.com</text>
+  <text x="350" y="375" class="table-text">15/01/2026</text>
+  <text x="455" y="375" class="table-text" text-anchor="middle">22</text>
+  <rect x="500" y="363" width="45" height="18" class="badge" fill="#C0392B"/>
+  <text x="522" y="376" class="badge-text">admin</text>
+  <text x="590" y="375" class="table-text" fill="#2E75B6">👁️ ✏️ 🗑️</text>
+
+  <!-- Row 4 -->
+  <rect x="55" y="388" width="590" height="35" class="table-row-alt"/>
+  <text x="70" y="410" class="table-text">dana_eco</text>
+  <text x="190" y="410" class="table-text">dana@efrei.net</text>
+  <text x="350" y="410" class="table-text">05/04/2026</text>
+  <text x="455" y="410" class="table-text" text-anchor="middle">3</text>
+  <rect x="500" y="398" width="40" height="18" class="badge" fill="#2E75B6"/>
+  <text x="520" y="411" class="badge-text">user</text>
+  <text x="590" y="410" class="table-text" fill="#2E75B6">👁️ ✏️ 🗑️</text>
+
+  <!-- Pagination -->
+  <text x="320" y="455" class="body">← 1 2 3 →</text>
+
+  <!-- Footer -->
+  <rect x="30" y="545" width="640" height="40" class="footer-bg"/>
+  <text x="350" y="570" class="footer-text">Poids Mort Numérique — Poids de la page : ~14 Ko</text>
+</svg>

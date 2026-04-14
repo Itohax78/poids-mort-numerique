@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 520" font-family="Arial, sans-serif">
+  <defs>
+    <style>
+      .frame { fill: #FFF; stroke: #CCC; stroke-width: 2; }
+      .header-bg { fill: #1B4F72; }
+      .nav-text { font-size: 13px; fill: #FFF; }
+      .h1 { font-size: 20px; fill: #1B4F72; font-weight: bold; text-anchor: middle; }
+      .body { font-size: 12px; fill: #555; }
+      .input-box { fill: #FFF; stroke: #CCC; stroke-width: 1.5; rx: 4; }
+      .input-label { font-size: 12px; fill: #333; font-weight: bold; }
+      .input-placeholder { font-size: 12px; fill: #BBB; }
+      .btn { rx: 6; }
+      .btn-primary { fill: #1B4F72; }
+      .btn-text { font-size: 13px; fill: #FFF; text-anchor: middle; font-weight: bold; }
+      .card { fill: #F8FBFE; stroke: #D6EAF8; stroke-width: 1.5; rx: 8; }
+      .wireframe-label { font-size: 18px; fill: #1B4F72; font-weight: bold; text-anchor: middle; }
+      .link { font-size: 12px; fill: #2E75B6; text-anchor: middle; }
+      .footer-bg { fill: #F4F6F6; }
+      .footer-text { font-size: 10px; fill: #999; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <text x="350" y="20" class="wireframe-label">Wireframe — Page de connexion</text>
+
+  <rect x="30" y="35" width="640" height="470" class="frame"/>
+
+  <!-- Header -->
+  <rect x="30" y="35" width="640" height="50" class="header-bg"/>
+  <text x="55" y="66" class="nav-text" font-weight="bold" font-size="15">Poids Mort Numérique</text>
+  <text x="580" y="66" class="nav-text">S'inscrire</text>
+
+  <!-- Login card -->
+  <rect x="175" y="120" width="350" height="300" class="card"/>
+
+  <text x="350" y="160" class="h1">Connexion</text>
+
+  <text x="210" y="195" class="input-label">Email</text>
+  <rect x="210" y="200" width="280" height="36" class="input-box"/>
+  <text x="220" y="224" class="input-placeholder">votre@email.com</text>
+
+  <text x="210" y="260" class="input-label">Mot de passe</text>
+  <rect x="210" y="265" width="280" height="36" class="input-box"/>
+  <text x="220" y="289" class="input-placeholder">••••••••</text>
+
+  <rect x="210" y="325" width="280" height="40" class="btn btn-primary"/>
+  <text x="350" y="351" class="btn-text">Se connecter</text>
+
+  <text x="350" y="395" class="link">Pas encore de compte ? Créer un compte</text>
+
+  <!-- Footer -->
+  <rect x="30" y="465" width="640" height="40" class="footer-bg"/>
+  <text x="350" y="490" class="footer-text">Poids Mort Numérique — Poids de la page : ~8 Ko</text>
+</svg>

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700" font-family="Arial, sans-serif">
+  <defs>
+    <style>
+      .frame { fill: #FFF; stroke: #CCC; stroke-width: 2; }
+      .header-bg { fill: #1B4F72; }
+      .nav-text { font-size: 13px; fill: #FFF; }
+      .page-title { font-size: 11px; fill: #999; text-anchor: middle; font-style: italic; }
+      .h1 { font-size: 22px; fill: #1B4F72; font-weight: bold; text-anchor: middle; }
+      .h2 { font-size: 16px; fill: #2E75B6; font-weight: bold; }
+      .body { font-size: 12px; fill: #555; }
+      .btn { rx: 6; }
+      .btn-primary { fill: #1B4F72; }
+      .btn-secondary { fill: #FFF; stroke: #1B4F72; stroke-width: 1.5; }
+      .btn-text { font-size: 12px; fill: #FFF; text-anchor: middle; font-weight: bold; }
+      .btn-text-sec { font-size: 12px; fill: #1B4F72; text-anchor: middle; font-weight: bold; }
+      .card { fill: #F8FBFE; stroke: #D6EAF8; stroke-width: 1.5; rx: 8; }
+      .wireframe-label { font-size: 18px; fill: #1B4F72; font-weight: bold; text-anchor: middle; }
+      .counter-big { font-size: 36px; fill: #1B4F72; font-weight: bold; text-anchor: middle; }
+      .counter-label { font-size: 12px; fill: #888; text-anchor: middle; }
+      .footer-bg { fill: #F4F6F6; }
+      .footer-text { font-size: 10px; fill: #999; text-anchor: middle; }
+      .placeholder { fill: #F0F0F0; stroke: #DDD; stroke-width: 1; stroke-dasharray: 4,2; }
+    </style>
+  </defs>
+
+  <text x="350" y="20" class="wireframe-label">Wireframe — Page d'accueil</text>
+
+  <!-- Browser frame -->
+  <rect x="30" y="35" width="640" height="650" class="frame"/>
+
+  <!-- Header / Nav -->
+  <rect x="30" y="35" width="640" height="50" class="header-bg"/>
+  <text x="55" y="66" class="nav-text" font-weight="bold" font-size="15">Poids Mort Numérique</text>
+  <text x="480" y="66" class="nav-text">Se connecter</text>
+  <text x="580" y="66" class="nav-text">S'inscrire</text>
+
+  <!-- Hero section -->
+  <text x="350" y="130" class="h1">Allégez votre empreinte numérique</text>
+  <text x="350" y="155" class="body" text-anchor="middle">Inventoriez vos comptes en ligne, identifiez ceux qui sont inutiles,</text>
+  <text x="350" y="172" class="body" text-anchor="middle">et suivez la progression de votre nettoyage numérique.</text>
+
+  <!-- CTA Buttons -->
+  <rect x="210" y="195" width="140" height="38" class="btn btn-primary"/>
+  <text x="280" y="219" class="btn-text">Créer un compte</text>
+  <rect x="370" y="195" width="140" height="38" class="btn btn-secondary"/>
+  <text x="440" y="219" class="btn-text-sec">Se connecter</text>
+
+  <!-- Counter card -->
+  <rect x="200" y="260" width="300" height="90" class="card"/>
+  <text x="350" y="300" class="counter-big">1 247</text>
+  <text x="350" y="325" class="counter-label">services numériques supprimés par notre communauté</text>
+
+  <!-- How it works -->
+  <text x="350" y="395" class="h2" text-anchor="middle">Comment ça marche ?</text>
+
+  <!-- 3 steps -->
+  <rect x="60" y="415" width="180" height="100" class="card"/>
+  <text x="150" y="445" class="body" text-anchor="middle" font-weight="bold">1. Inventoriez</text>
+  <text x="150" y="465" class="body" text-anchor="middle">Listez vos comptes</text>
+  <text x="150" y="480" class="body" text-anchor="middle">et abonnements</text>
+
+  <rect x="260" y="415" width="180" height="100" class="card"/>
+  <text x="350" y="445" class="body" text-anchor="middle" font-weight="bold">2. Nettoyez</text>
+  <text x="350" y="465" class="body" text-anchor="middle">Supprimez les</text>
+  <text x="350" y="480" class="body" text-anchor="middle">services inutiles</text>
+
+  <rect x="460" y="415" width="180" height="100" class="card"/>
+  <text x="550" y="445" class="body" text-anchor="middle" font-weight="bold">3. Progressez</text>
+  <text x="550" y="465" class="body" text-anchor="middle">Suivez votre score</text>
+  <text x="550" y="480" class="body" text-anchor="middle">de sobriété</text>
+
+  <!-- Eco commitment box -->
+  <rect x="60" y="540" width="580" height="80" class="card" stroke="#27AE60"/>
+  <text x="350" y="565" class="h2" text-anchor="middle" fill="#27AE60">🌱 Nos engagements écologiques</text>
+  <text x="350" y="585" class="body" text-anchor="middle">Ce site pèse moins de 50 Ko. Pas de framework JS, pas d'images</text>
+  <text x="350" y="600" class="body" text-anchor="middle">décoratives, pas de polices externes. Hébergé sur serveur mutualisé.</text>
+
+  <!-- Footer -->
+  <rect x="30" y="645" width="640" height="40" class="footer-bg"/>
+  <text x="350" y="670" class="footer-text">Poids Mort Numérique — Projet TI616 EFREI — Poids de la page : ~12 Ko</text>
+</svg>

@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 580" font-family="Arial, sans-serif">
+  <defs>
+    <style>
+      .title { font-size: 20px; font-weight: bold; fill: #1B4F72; }
+      .actor-box { fill: #1B4F72; stroke: #1B4F72; stroke-width: 1.5; rx: 6; }
+      .actor-name { font-size: 13px; fill: white; text-anchor: middle; font-weight: bold; }
+      .lifeline { stroke: #AAA; stroke-width: 1; stroke-dasharray: 6,4; }
+      .msg { stroke: #2E75B6; stroke-width: 1.5; marker-end: url(#arrowB); }
+      .msg-ret { stroke: #888; stroke-width: 1.5; stroke-dasharray: 5,3; marker-end: url(#arrowG); }
+      .msg-label { font-size: 11.5px; fill: #333; }
+      .activation { fill: #D6EAF8; stroke: #2E75B6; stroke-width: 1; }
+      .note { fill: #FEF9E7; stroke: #F4D03F; stroke-width: 1; rx: 4; }
+      .note-text { font-size: 11px; fill: #7D6608; }
+      .step { font-size: 11px; fill: white; font-weight: bold; }
+      .step-bg { fill: #2E75B6; rx: 10; }
+    </style>
+    <marker id="arrowB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2E75B6"/>
+    </marker>
+    <marker id="arrowG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <text x="410" y="30" class="title" text-anchor="middle">Diagramme de séquence — Ajout d'un service numérique</text>
+
+  <!-- Actors -->
+  <rect x="60" y="50" width="120" height="32" class="actor-box"/>
+  <text x="120" y="72" class="actor-name">Navigateur</text>
+
+  <rect x="280" y="50" width="120" height="32" class="actor-box"/>
+  <text x="340" y="72" class="actor-name">Flask (routes.py)</text>
+
+  <rect x="500" y="50" width="120" height="32" class="actor-box"/>
+  <text x="560" y="72" class="actor-name">Validation</text>
+
+  <rect x="680" y="50" width="110" height="32" class="actor-box"/>
+  <text x="735" y="72" class="actor-name">SQLite</text>
+
+  <!-- Lifelines -->
+  <line x1="120" y1="82" x2="120" y2="560" class="lifeline"/>
+  <line x1="340" y1="82" x2="340" y2="560" class="lifeline"/>
+  <line x1="560" y1="82" x2="560" y2="560" class="lifeline"/>
+  <line x1="735" y1="82" x2="735" y2="560" class="lifeline"/>
+
+  <!-- Activations -->
+  <rect x="114" y="110" width="12" height="50" class="activation"/>
+  <rect x="334" y="120" width="12" height="350" class="activation"/>
+  <rect x="554" y="175" width="12" height="60" class="activation"/>
+  <rect x="729" y="280" width="12" height="140" class="activation"/>
+
+  <!-- Step 1: User fills form -->
+  <rect x="20" y="100" width="22" height="22" class="step-bg"/>
+  <text x="31" y="116" class="step">1</text>
+  <line x1="126" y1="120" x2="334" y2="120" class="msg"/>
+  <text x="180" y="115" class="msg-label">POST /services/add</text>
+  <text x="180" y="130" class="msg-label" font-size="10" fill="#888">{nom, catégorie, statut}</text>
+
+  <!-- Step 2: Validate -->
+  <rect x="240" y="165" width="22" height="22" class="step-bg"/>
+  <text x="251" y="181" class="step">2</text>
+  <line x1="346" y1="180" x2="554" y2="180" class="msg"/>
+  <text x="420" y="173" class="msg-label">Valider les données</text>
+
+  <!-- Validation OK -->
+  <line x1="554" y1="220" x2="346" y2="220" class="msg-ret"/>
+  <text x="420" y="215" class="msg-label" fill="#27AE60">✓ Données valides</text>
+
+  <!-- Alt: validation error -->
+  <rect x="390" y="234" width="190" height="30" class="note"/>
+  <text x="400" y="254" class="note-text">Si invalide → redirect avec erreur</text>
+
+  <!-- Step 3: Insert service -->
+  <rect x="240" y="275" width="22" height="22" class="step-bg"/>
+  <text x="251" y="291" class="step">3</text>
+  <line x1="346" y1="290" x2="729" y2="290" class="msg"/>
+  <text x="520" y="283" class="msg-label">INSERT INTO ServiceNumérique</text>
+
+  <!-- Step 4: DB confirms -->
+  <line x1="729" y1="320" x2="346" y2="320" class="msg-ret"/>
+  <text x="520" y="315" class="msg-label">OK — service créé</text>
+
+  <!-- Step 5: Recalculate score -->
+  <rect x="240" y="340" width="22" height="22" class="step-bg"/>
+  <text x="251" y="356" class="step">4</text>
+  <line x1="346" y1="355" x2="729" y2="355" class="msg"/>
+  <text x="520" y="348" class="msg-label">SELECT COUNT(*) ... GROUP BY statut</text>
+
+  <!-- Score returned -->
+  <line x1="729" y1="385" x2="346" y2="385" class="msg-ret"/>
+  <text x="520" y="380" class="msg-label">score = 72%</text>
+
+  <!-- Step 6: Redirect -->
+  <rect x="240" y="415" width="22" height="22" class="step-bg"/>
+  <text x="251" y="431" class="step">5</text>
+  <line x1="334" y1="430" x2="126" y2="430" class="msg-ret"/>
+  <text x="190" y="423" class="msg-label">redirect → /dashboard</text>
+
+  <!-- Step 6: Dashboard with score -->
+  <rect x="20" y="450" width="22" height="22" class="step-bg"/>
+  <text x="31" y="466" class="step">6</text>
+  <rect x="114" y="455" width="12" height="40" class="activation"/>
+  <line x1="126" y1="460" x2="334" y2="460" class="msg"/>
+  <text x="200" y="455" class="msg-label">GET /dashboard</text>
+  <line x1="334" y1="485" x2="126" y2="485" class="msg-ret"/>
+  <text x="200" y="503" class="msg-label">HTML dashboard + score mis à jour</text>
+</svg>
