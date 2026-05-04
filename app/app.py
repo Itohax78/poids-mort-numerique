@@ -22,6 +22,32 @@ from flask import Flask, request
 from . import models, routes
 
 
+_WEIGHT_PLACEHOLDER = b"__PMN_WEIGHT__"
+
+
+def _inject_page_weight(response):
+    """Remplace le placeholder par la taille réelle de la réponse HTML.
+
+    Mesure faite avant gzip : on affiche le poids HTML non compressé,
+    qui correspond à ce que le navigateur reçoit après décompression
+    et à ce que les outils type EcoIndex mesurent. L'écart entre la
+    taille mesurée (avec placeholder) et la taille envoyée (avec
+    valeur insérée) est < 15 octets, soit < 0,02 Ko — sous la
+    précision affichée.
+    """
+    ctype = response.content_type or ""
+    if not ctype.startswith("text/html"):
+        return response
+    if response.direct_passthrough:
+        return response
+    data = response.get_data()
+    if _WEIGHT_PLACEHOLDER not in data:
+        return response
+    kb = f"{len(data) / 1024:.1f}".encode("ascii")
+    response.set_data(data.replace(_WEIGHT_PLACEHOLDER, kb))
+    return response
+
+
 def _gzip_response(response):
     """Compresse les réponses textuelles si le client l'accepte."""
     accept = request.headers.get("Accept-Encoding", "")
@@ -88,8 +114,11 @@ def create_app():
     # feuille à chaque navigation interne.
     app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 86400
 
-    # Compression gzip à la volée — sans dépendance externe.
+    # Ordre des after_request : Flask les exécute en LIFO.
+    # On enregistre gzip d'abord (s'exécute en dernier) puis l'injection
+    # de poids (s'exécute en premier, sur le HTML non compressé).
     app.after_request(_gzip_response)
+    app.after_request(_inject_page_weight)
 
     return app
 

@@ -71,25 +71,7 @@ def _valid_pseudo(pseudo):
 @bp.route("/")
 def home():
     stats = models.get_global_stats()
-    # Calcul des kg CO2 evités globalement (approximatif)
-    co2_total_kg = round(stats.get("nb_supprimes", 0) * 1.5 + stats.get("nb_dormants", 0) * 0.5) 
-    
-    # Mur de la honte (statistiques anonymisées)
-    mur_honte = {}
-    with models.get_db() as conn:
-        # Pire Zombie : Le nom de service le plus souvent déclaré (statut actif)
-        pire_zombie = conn.execute(
-            "SELECT nom, COUNT(*) as count FROM services WHERE statut = 'actif' GROUP BY nom ORDER BY count DESC LIMIT 1"
-        ).fetchone()
-        mur_honte['pire_zombie'] = pire_zombie['nom'] if pire_zombie else "Aucun"
-        
-        # Le plus vieux compte supprimé (différence entre date actuelle et date_ajout)
-        vieux_supprime = conn.execute(
-            "SELECT nom, CAST(julianday('now') - julianday(date_ajout) AS INTEGER) as age_jours FROM services WHERE statut = 'supprime' ORDER BY age_jours DESC LIMIT 1"
-        ).fetchone()
-        mur_honte['vieux_supprime'] = vieux_supprime
-        
-    return render_template("home.html", stats=stats, co2_total_kg=co2_total_kg, mur_honte=mur_honte)
+    return render_template("home.html", stats=stats)
 
 
 # ----------------------------------------------------------------

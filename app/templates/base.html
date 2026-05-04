@@ -40,10 +40,7 @@
   <footer class="site">
     <div id="eco-widget" style="margin-bottom: var(--space-md); padding: var(--space-sm); border: 1px solid var(--c-border); border-radius: var(--radius); display: inline-block; text-align: left;">
       <div style="font-weight: 600; margin-bottom: var(--space-xs);">🌿 Bilan Éco de la page</div>
-      <div>Poids estimé : <strong id="page-weight">...</strong> Ko</div>
-      <div style="margin-top: var(--space-xs);">
-        <button id="toggle-extreme" class="secondary" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">Activer Mode Extrême</button>
-      </div>
+      <div>Poids HTML : <strong>__PMN_WEIGHT__</strong> Ko <small>(non compressé)</small></div>
     </div>
     <p>
       Site éco-conçu — Flask + SQLite, sans framework front-end, sans média externe.<br>
@@ -52,48 +49,19 @@
   </footer>
 
   <script>
-    // 1. Indicateur de poids (très simplifié pour la contrainte)
+    // Easter egg : taper "green" active un thème terminal.
     document.addEventListener('DOMContentLoaded', () => {
-      // Calcul approximatif basé sur innerHTML + base size
-      const htmlSize = document.documentElement.innerHTML.length;
-      const cssSize = 10000; // ~10Ko pour style.css (estimé)
-      const totalKB = ((htmlSize + cssSize) / 1024).toFixed(1);
-      document.getElementById('page-weight').textContent = totalKB;
-      
-      // 2. Mode Extrême
-      const btn = document.getElementById('toggle-extreme');
-      const isExtreme = localStorage.getItem('extreme-eco') === 'true';
-      
-      if (isExtreme) {
-        document.body.classList.add('extreme-eco');
-        btn.textContent = 'Désactiver Mode Extrême';
-      }
-      
-      btn.addEventListener('click', () => {
-        const currentlyExtreme = document.body.classList.contains('extreme-eco');
-        if (currentlyExtreme) {
-          document.body.classList.remove('extreme-eco');
-          localStorage.setItem('extreme-eco', 'false');
-          btn.textContent = 'Activer Mode Extrême';
-        } else {
-          document.body.classList.add('extreme-eco');
-          localStorage.setItem('extreme-eco', 'true');
-          btn.textContent = 'Désactiver Mode Extrême';
-        }
-      });
-      
-      // 3. Easter Egg: Konami Code "GREEN"
-      let konamiCode = ['g', 'r', 'e', 'e', 'n'];
-      let konamiPosition = 0;
+      const konamiCode = ['g', 'r', 'e', 'e', 'n'];
+      let pos = 0;
       document.addEventListener('keydown', (e) => {
-        if (e.key.toLowerCase() === konamiCode[konamiPosition]) {
-          konamiPosition++;
-          if (konamiPosition === konamiCode.length) {
+        if (e.key.toLowerCase() === konamiCode[pos]) {
+          pos++;
+          if (pos === konamiCode.length) {
             document.body.classList.toggle('terminal-mode');
-            konamiPosition = 0;
+            pos = 0;
           }
         } else {
-          konamiPosition = 0;
+          pos = 0;
         }
       });
     });
