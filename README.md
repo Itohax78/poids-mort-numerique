@@ -18,7 +18,7 @@ Le site lui-même est conçu pour incarner les principes qu'il promeut : aucun
 framework front-end, aucune police externe, aucun média décoratif, base de données
 fichier, requêtes minimales.
 
-**URL de déploiement** : `<À COMPLÉTER>` *(ex. https://poids-mort-numerique.onrender.com — voir section 5)*
+**URL de déploiement** : `https://poids-mort-numerique-hi77.onrender.com/`
 
 ## 2. Membres de l'équipe
 
