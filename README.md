@@ -24,8 +24,8 @@ fichier, requêtes minimales.
 
 | Membre               | Rôle principal                            |
 | -------------------- | ----------------------------------------- |
-| Antoine Poirier      | Back-end Flask, modélisation BDD          |
-| Victor Proffit       |                                           |
+| Antoine Poirier      | Back-end Flask                            |
+| Victor Proffit       | Modélisation BDD                          |
 | Noé Millereux        | Front-end, templates Jinja2, CSS sobre    |
 | Guillaume Ortells    | Authentification, admin, tests            |
 | *(coordinateur)*     | Yvan Guifo — encadrement                  |
