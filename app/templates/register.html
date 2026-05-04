@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+<h1>Créer un compte</h1>
+
+<p>Trois informations suffisent. Aucun nom, aucune photo, aucun numéro de téléphone.</p>
+
+<form class="stacked" method="post" action="{{ url_for('main.register') }}">
+  <label for="pseudo">Pseudo</label>
+  <input type="text" id="pseudo" name="pseudo" required minlength="2" maxlength="40"
+         pattern="[A-Za-z0-9_-]+" autocomplete="username">
+
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" required maxlength="120" autocomplete="email">
+
+  <label for="mot_de_passe">Mot de passe (8 caractères minimum)</label>
+  <input type="password" id="mot_de_passe" name="mot_de_passe" required minlength="8"
+         autocomplete="new-password">
+
+  <p style="margin-top:1rem;">
+    <button type="submit">Créer mon compte</button>
+  </p>
+</form>
+{% endblock %}

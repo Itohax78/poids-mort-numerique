@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Administration{% endblock %}
+
+{% block content %}
+<h1>Administration</h1>
+
+<div class="card">
+  <h2>Statistiques globales</h2>
+  <div class="kpis">
+    <div class="kpi"><strong>{{ stats.nb_users }}</strong><small>utilisateurs</small></div>
+    <div class="kpi"><strong>{{ stats.nb_total }}</strong><small>services</small></div>
+    <div class="kpi"><strong>{{ stats.nb_actifs }}</strong><small>actifs</small></div>
+    <div class="kpi"><strong>{{ stats.nb_dormants }}</strong><small>dormants</small></div>
+    <div class="kpi"><strong>{{ stats.nb_supprimes }}</strong><small>supprimés</small></div>
+  </div>
+</div>
+
+<h2>Utilisateurs</h2>
+<p><a href="{{ url_for('main.admin_export') }}" class="button secondary">Exporter tous les utilisateurs (CSV)</a></p>
+
+{% if users %}
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Pseudo</th>
+      <th scope="col">Email</th>
+      <th scope="col">Rôle</th>
+      <th scope="col">Inscription</th>
+      <th scope="col">Services</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for u in users %}
+    <tr>
+      <td>{{ u.pseudo }}</td>
+      <td>{{ u.email }}</td>
+      <td>{{ u.role }}</td>
+      <td>{{ u.date_inscription[:10] }}</td>
+      <td>{{ u.nb_services }}</td>
+      <td class="actions">
+        {% if u.id != session.user_id %}
+          <form method="post" action="{{ url_for('main.admin_delete_user', user_id=u.id) }}"
+                onsubmit="return confirm('Supprimer définitivement {{ u.pseudo }} ?');">
+            <button type="submit" class="danger">Supprimer</button>
+          </form>
+        {% else %}
+          <small>(vous)</small>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if nb_total > per_page %}
+<nav class="pagination" aria-label="Pagination">
+  {% if page > 1 %}
+    <a href="{{ url_for('main.admin_home', page=page-1) }}">← Précédent</a>
+  {% endif %}
+  <span>Page {{ page }} / {{ ((nb_total - 1) // per_page) + 1 }}</span>
+  {% if page * per_page < nb_total %}
+    <a href="{{ url_for('main.admin_home', page=page+1) }}">Suivant →</a>
+  {% endif %}
+</nav>
+{% endif %}
+
+{% else %}
+<p>Aucun utilisateur pour l'instant.</p>
+{% endif %}
+{% endblock %}

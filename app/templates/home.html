@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Accueil — Poids Mort Numérique{% endblock %}
+
+{% block content %}
+<h1>Reprenez le contrôle de votre empreinte numérique</h1>
+
+<p>
+  La majorité d'entre nous accumule au fil des années des dizaines de comptes en ligne
+  inutilisés, d'abonnements oubliés, d'espaces cloud dormants. Ces « poids morts numériques »
+  consomment de l'énergie serveur en continu, sans rien apporter à personne.
+</p>
+
+<p>
+  <strong>Poids Mort Numérique</strong> est un outil simple pour inventorier vos services,
+  suivre leur statut (actif → dormant → supprimé), et visualiser un score de sobriété
+  qui progresse à chaque nettoyage.
+</p>
+
+<div class="card">
+  <h2>Notre engagement écologique</h2>
+  <ul>
+    <li>Aucun framework front-end : HTML/CSS vanilla, polices système, zéro requête réseau externe.</li>
+    <li>Pas de tracker, pas d'analytics, pas de cookie tiers.</li>
+    <li>Base de données fichier (SQLite), zéro serveur externe.</li>
+    <li>Données utilisateur strictement minimales : pseudo, email, mot de passe hashé.</li>
+  </ul>
+</div>
+
+{% if not session.user_id %}
+<p>
+  <a class="btn" href="{{ url_for('main.register') }}">Créer un compte</a>
+  <a class="btn secondary" href="{{ url_for('main.login') }}">Se connecter</a>
+</p>
+{% else %}
+<p>
+  <a class="btn" href="{{ url_for('main.dashboard') }}">Voir mon tableau de bord</a>
+</p>
+{% endif %}
+
+<div class="card" style="text-align: center; border-color: var(--c-accent); border-width: 2px;">
+  <h2 style="margin-top: 0;">🌍 Bilan Communautaire</h2>
+  <div style="font-size: 3rem; font-weight: 800; color: var(--c-accent); margin: var(--space-sm) 0;">
+    -{{ co2_total_kg }} kg CO₂
+  </div>
+  <p style="color: var(--c-text-soft);">Évités chaque année par l'ensemble de nos utilisateurs.</p>
+</div>
+
+<div class="card">
+  <h2>L'état de la communauté</h2>
+  <div class="kpis">
+    <div class="kpi"><strong>{{ stats.nb_users }}</strong><small>utilisateurs inscrits</small></div>
+    <div class="kpi"><strong>{{ stats.nb_total }}</strong><small>services inventoriés</small></div>
+    <div class="kpi"><strong>{{ stats.nb_supprimes }}</strong><small>services supprimés</small></div>
+  </div>
+</div>
+
+<div class="card" style="background: var(--c-error-soft);">
+  <h2 style="color: var(--c-error);">🎭 Le Mur de la Honte (Statistiques Anonymes)</h2>
+  <ul style="list-style: none; padding: 0;">
+    <li style="margin-bottom: var(--space-sm);">
+      🧟 <strong>Pire Zombie :</strong> 
+      {% if mur_honte.pire_zombie %}
+        « {{ mur_honte.pire_zombie }} » est le service le plus souvent déclaré comme inactif.
+      {% else %}
+        Aucun pour le moment.
+      {% endif %}
+    </li>
+    <li>
+      🏆 <strong>Persévérance :</strong> 
+      {% if mur_honte.vieux_supprime %}
+        Un utilisateur a enfin supprimé un compte vieux de {{ mur_honte.vieux_supprime.age_jours }} jours (« {{ mur_honte.vieux_supprime.nom }} ») !
+      {% else %}
+        Aucun compte supprimé pour l'instant.
+      {% endif %}
+    </li>
+  </ul>
+</div>
+{% endblock %}

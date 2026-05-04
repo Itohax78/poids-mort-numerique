@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Le Cimetière Numérique{% endblock %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: var(--space-xl);">
+  <h1>🪦 Le Cimetière Numérique</h1>
+  <p style="color: var(--c-text-soft);">Ici reposent en paix les services que vous avez eu le courage de supprimer.</p>
+</div>
+
+<nav class="filters" aria-label="Retour">
+  <a href="{{ url_for('main.dashboard') }}">← Retour au Tableau de bord</a>
+</nav>
+
+{% if services %}
+<div style="display: flex; flex-wrap: wrap; gap: var(--space-lg); justify-content: center; margin-top: var(--space-xl);">
+  {% for s in services %}
+  <div class="tombe" style="
+    width: 140px; 
+    background: linear-gradient(to bottom, #dcdcdc, #c0c0c0); 
+    border: 2px solid #a0a0a0; 
+    border-radius: 60px 60px 0 0; 
+    padding: var(--space-lg) var(--space-sm); 
+    text-align: center; 
+    box-shadow: 2px 5px 10px rgba(0,0,0,0.1);
+    position: relative;
+    border-bottom: 4px solid #8b8b8b;
+  ">
+    <div style="font-size: 1.5rem; margin-bottom: var(--space-xs);">✝️</div>
+    <div style="font-size: 0.8rem; font-weight: bold; text-transform: uppercase; color: #444;">{{ s.nom }}</div>
+    <div style="font-size: 0.65rem; color: #555; margin-top: var(--space-sm);">
+      RIP<br>
+      Ajouté le:<br>{{ s.date_ajout[:10] }}
+    </div>
+    <div style="font-size: 0.65rem; color: var(--c-accent); font-weight: bold; margin-top: var(--space-xs);">
+      -{{ s.impact_kwh_an }} kWh/an
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% if nb_total > per_page %}
+<nav class="pagination" aria-label="Pagination" style="justify-content: center; margin-top: var(--space-xl);">
+  {% if page > 1 %}
+    <a href="{{ url_for('main.dashboard', statut='supprime', sort=sort_filter, page=page-1) }}">← Précédent</a>
+  {% endif %}
+  <span>Page {{ page }} / {{ ((nb_total - 1) // per_page) + 1 }}</span>
+  {% if page * per_page < nb_total %}
+    <a href="{{ url_for('main.dashboard', statut='supprime', sort=sort_filter, page=page+1) }}">Suivant →</a>
+  {% endif %}
+</nav>
+{% endif %}
+
+{% else %}
+<div class="card" style="text-align: center;">
+  <p>Le cimetière est vide. Il est temps de faire le tri !</p>
+  <a class="btn" href="{{ url_for('main.dashboard') }}">Voir mes comptes actifs</a>
+</div>
+{% endif %}
+
+<style>
+  @media (prefers-color-scheme: dark) {
+    .tombe {
+      background: linear-gradient(to bottom, #4a4a4a, #333) !important;
+      border-color: #222 !important;
+      border-bottom-color: #111 !important;
+    }
+    .tombe div { color: #ccc !important; }
+  }
+  body.extreme-eco .tombe {
+    background: #000 !important;
+    border: 1px solid #fff !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  body.extreme-eco .tombe div { color: #fff !important; }
+</style>
+{% endblock %}

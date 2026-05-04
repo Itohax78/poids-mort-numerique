@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block title %}Tableau de bord{% endblock %}
+
+{% block content %}
+<h1>Bonjour, {{ session.pseudo }}</h1>
+
+<div class="card score">
+  <div class="value">{{ stats.score }}<span class="unit">/100</span></div>
+  <p>Score de sobriété numérique</p>
+  <div class="bar"><span style="width: {{ stats.score }}%;"></span></div>
+  <p>
+    <small>
+      Énergie évitée estimée : <strong>{{ stats.kwh_evites }} kWh / an</strong>
+      &nbsp;·&nbsp; CO₂ évité : <strong>{{ stats.co2_evite_g }} g / an</strong>
+    </small>
+  </p>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><strong>{{ stats.total }}</strong><small>services</small></div>
+  <div class="kpi"><strong>{{ stats.actifs }}</strong><small>actifs</small></div>
+  <div class="kpi"><strong>{{ stats.dormants }}</strong><small>dormants</small></div>
+  <div class="kpi"><strong>{{ stats.supprimes }}</strong><small>supprimés</small></div>
+</div>
+
+{% if conseils %}
+<div class="card">
+  <h2>Conseils</h2>
+  <ul>
+    {% for c in conseils %}
+    <li>{{ c }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+<div style="display: flex; gap: var(--space-md); margin-bottom: var(--space-md);">
+  <a class="btn" href="{{ url_for('main.add_service') }}">Ajouter un service</a>
+  <a class="btn secondary" href="{{ url_for('main.flemme') }}">🎲 J'ai la flemme (Suggérer un nettoyage)</a>
+</div>
+
+<h2>Mes services numériques</h2>
+
+<nav class="filters" aria-label="Filtre par statut">
+  <a href="{{ url_for('main.dashboard') }}"
+     class="{{ 'current' if not statut_filter }}">Tous</a>
+  <a href="{{ url_for('main.dashboard', statut='actif') }}"
+     class="{{ 'current' if statut_filter == 'actif' }}">Actifs</a>
+  <a href="{{ url_for('main.dashboard', statut='dormant') }}"
+     class="{{ 'current' if statut_filter == 'dormant' }}">Dormants</a>
+  <a href="{{ url_for('main.dashboard', statut='supprime') }}"
+     class="{{ 'current' if statut_filter == 'supprime' }}">Supprimés</a>
+</nav>
+
+<nav class="filters" aria-label="Trier par">
+  <span style="font-size: 0.85rem; color: var(--c-text-soft);">Trier par :</span>
+  <a href="{{ url_for('main.dashboard', statut=statut_filter, sort='date_desc') }}"
+     class="{{ 'current' if sort_filter == 'date_desc' }}">Plus récents</a>
+  <a href="{{ url_for('main.dashboard', statut=statut_filter, sort='date_asc') }}"
+     class="{{ 'current' if sort_filter == 'date_asc' }}">Plus anciens</a>
+  <a href="{{ url_for('main.dashboard', statut=statut_filter, sort='nom') }}"
+     class="{{ 'current' if sort_filter == 'nom' }}">Nom</a>
+  <a href="{{ url_for('main.dashboard', statut=statut_filter, sort='categorie') }}"
+     class="{{ 'current' if sort_filter == 'categorie' }}">Catégorie</a>
+</nav>
+
+{% if services %}
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Nom</th>
+      <th scope="col">Catégorie</th>
+      <th scope="col">Statut</th>
+      <th scope="col">Ajouté le</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in services %}
+    <tr>
+      <td>
+        <strong>{{ s.nom }}</strong>
+        {% if s.is_zombie %}
+          <span title="Inactif depuis plus de 6 mois" style="cursor:help; font-size:0.8rem;">🧟 Zombie suspecté</span>
+        {% endif %}
+      </td>
+      <td>{{ s.categorie_nom }}</td>
+      <td><span class="statut {{ s.statut }}">{{ s.statut }}</span></td>
+      <td>{{ s.date_ajout[:10] }}</td>
+      <td class="actions">
+        {% if s.statut != 'dormant' %}
+        <form method="post" action="{{ url_for('main.change_status', service_id=s.id) }}">
+          <input type="hidden" name="statut" value="dormant">
+          <button type="submit" class="secondary">Rendre dormant</button>
+        </form>
+        {% endif %}
+        {% if s.statut == 'actif' or s.statut == 'dormant' %}
+        <a class="btn secondary" style="border-color:#3b82f6; color:#3b82f6;" 
+           href="mailto:privacy@exemple.com?subject=Demande de suppression RGPD ({{ s.nom }})&body=Bonjour,%0D%0A%0D%0AConformément à l'article 17 du RGPD (Droit à l'effacement), je vous demande de supprimer l'intégralité des données associées à mon compte '{{ s.nom }}' lié à l'adresse e-mail {{ session.email }}.%0D%0A%0D%0AMerci de m'informer de la réalisation de cette action.%0D%0A%0D%0ACordialement."
+           title="Générer un e-mail de demande de suppression RGPD">
+           ⚖️ Droit à l'oubli
+        </a>
+        {% endif %}
+        {% if s.statut != 'supprime' %}
+        <form method="post" action="{{ url_for('main.change_status', service_id=s.id) }}">
+          <input type="hidden" name="statut" value="supprime">
+          <button type="submit">Marquer supprimé</button>
+        </form>
+        {% endif %}
+        <a class="btn secondary" href="{{ url_for('main.edit_service', service_id=s.id) }}">Modifier</a>
+        <form method="post" action="{{ url_for('main.remove_service', service_id=s.id) }}"
+              onsubmit="return confirm('Retirer ce service de votre inventaire ?');">
+          <button type="submit" class="danger">Retirer</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{# Pagination simple — uniquement quand utile #}
+{% if nb_total > per_page %}
+<nav class="pagination" aria-label="Pagination">
+  {% if page > 1 %}
+    <a href="{{ url_for('main.dashboard', statut=statut_filter, sort=sort_filter, page=page-1) }}">← Précédent</a>
+  {% endif %}
+  <span>Page {{ page }} / {{ ((nb_total - 1) // per_page) + 1 }}</span>
+  {% if page * per_page < nb_total %}
+    <a href="{{ url_for('main.dashboard', statut=statut_filter, sort=sort_filter, page=page+1) }}">Suivant →</a>
+  {% endif %}
+</nav>
+{% endif %}
+
+{% else %}
+<p>
+  Aucun service {{ statut_filter or 'enregistré' }} pour l'instant.
+  <a href="{{ url_for('main.add_service') }}">Ajoutez-en un</a> pour commencer.
+</p>
+{% endif %}
+{% endblock %}

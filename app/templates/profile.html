@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Mon profil{% endblock %}
+
+{% block content %}
+<h1>Mon profil</h1>
+
+<div class="flash error" style="margin-bottom: var(--space-lg); border-left-color: var(--c-error);">
+  <strong>⚠️ Règle de Sobriété (Data Diet) :</strong><br>
+  Conformément à nos valeurs, votre compte s'autodétruira si vous ne vous connectez pas pendant 1 an.
+  <br>Temps restant avant autodestruction (estimé) : <strong>364 jours</strong>.
+</div>
+
+<div class="card" style="text-align: center; background: var(--c-accent-soft);">
+  <h2>Badge Éco-Guerrier</h2>
+  <p>Affichez fièrement votre score sur votre site ou votre profil GitHub avec ce badge généré sans JavaScript ni image lourde (SVG natif) :</p>
+  <div style="margin: var(--space-md) 0;">
+    <img src="{{ url_for('main.badge_svg', u=session.user_id) }}" alt="Badge Poids Mort">
+  </div>
+  <p style="font-size: 0.8rem; margin: 0;">Code à copier :</p>
+  <code style="display: block; background: var(--c-surface); padding: var(--space-xs); font-size: 0.75rem; overflow-x: auto; margin-top: var(--space-xs);">
+    &lt;img src="{{ url_for('main.badge_svg', u=session.user_id, _external=True) }}" alt="Mon Eco-Score Poids Mort"&gt;
+  </code>
+</div>
+
+<div class="card">
+  <h2>Informations</h2>
+  <form class="stacked" method="post" action="{{ url_for('main.profile') }}">
+    <input type="hidden" name="action" value="update">
+
+    <label for="pseudo">Pseudo</label>
+    <input type="text" id="pseudo" name="pseudo" value="{{ user.pseudo }}"
+           required minlength="2" maxlength="40" pattern="[A-Za-z0-9_-]+">
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" value="{{ user.email }}"
+           required maxlength="120">
+
+    <p><small>Inscrit·e depuis le {{ user.date_inscription[:10] }}</small></p>
+
+    <p><button type="submit">Enregistrer</button></p>
+  </form>
+</div>
+
+<div class="card">
+  <h2>Mot de passe</h2>
+  <form class="stacked" method="post" action="{{ url_for('main.profile') }}">
+    <input type="hidden" name="action" value="password">
+
+    <label for="actuel">Mot de passe actuel</label>
+    <input type="password" id="actuel" name="mot_de_passe_actuel" required autocomplete="current-password">
+
+    <label for="nouveau">Nouveau mot de passe</label>
+    <input type="password" id="nouveau" name="nouveau_mot_de_passe" required minlength="8" autocomplete="new-password">
+
+    <p><button type="submit">Modifier le mot de passe</button></p>
+  </form>
+</div>
+
+<div class="card">
+  <h2>Supprimer mon compte</h2>
+  <p>
+    Cette action est <strong>irréversible</strong>. Tous vos services numériques seront
+    également supprimés.
+  </p>
+  <form method="post" action="{{ url_for('main.delete_account') }}">
+    <label for="confirm">Tapez <code>SUPPRIMER</code> pour confirmer :</label>
+    <input type="text" id="confirm" name="confirmation" required pattern="SUPPRIMER">
+    <p><button type="submit" class="danger">Supprimer définitivement mon compte</button></p>
+  </form>
+</div>
+
+<div class="card">
+  <h2>Exporter mes données</h2>
+  <p>
+    Téléchargez vos données personnelles au format CSV
+    (profil, services, statistiques).
+  </p>
+  <p><a href="{{ url_for('main.export_profile') }}" class="button secondary">Télécharger le CSV</a></p>
+</div>
+{% endblock %}

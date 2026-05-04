@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Modifier' if service else 'Ajouter' }} un service{% endblock %}
+
+{% block content %}
+<h1>{{ 'Modifier' if service else 'Ajouter' }} un service</h1>
+
+<form class="stacked" method="post">
+  <label for="nom">Nom du service {% if not service %}<small>(Un par ligne pour en ajouter plusieurs)</small>{% endif %}</label>
+  {% if service %}
+  <input type="text" id="nom" name="nom" required maxlength="80"
+         value="{{ service.nom }}" placeholder="ex. Compte LinkedIn">
+  {% else %}
+  <textarea id="nom" name="nom" required rows="4" placeholder="ex. Compte LinkedIn&#10;Newsletter Le Monde&#10;Amazon"></textarea>
+  {% endif %}
+
+  <label for="categorie_id">Catégorie</label>
+  <select id="categorie_id" name="categorie_id" required>
+    {% for c in categories %}
+      <option value="{{ c.id }}"
+        {% if service and service.categorie_id == c.id %}selected{% endif %}>
+        {{ c.nom }} (~{{ c.impact_kwh_an }} kWh/an)
+      </option>
+    {% endfor %}
+  </select>
+
+  <label for="statut">Statut</label>
+  <select id="statut" name="statut" required>
+    <option value="actif"    {% if service and service.statut == 'actif'    %}selected{% endif %}>Actif</option>
+    <option value="dormant"  {% if service and service.statut == 'dormant'  %}selected{% endif %}>Dormant</option>
+    <option value="supprime" {% if service and service.statut == 'supprime' %}selected{% endif %}>Supprimé</option>
+  </select>
+
+  <p style="margin-top:1rem;">
+    <button type="submit">{{ 'Enregistrer' if service else 'Ajouter' }}</button>
+    <a class="btn secondary" href="{{ url_for('main.dashboard') }}">Annuler</a>
+  </p>
+</form>
+{% endblock %}

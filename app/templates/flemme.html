@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Mode Flemme{% endblock %}
+
+{% block content %}
+<div class="card" style="text-align: center; padding: var(--space-xl); margin-top: var(--space-xl);">
+  <div style="font-size: 3rem; margin-bottom: var(--space-md);">🎲</div>
+  <h2 style="font-size: 1.5rem; margin-bottom: var(--space-sm);">Avez-vous vraiment utilisé ce service récemment ?</h2>
+  
+  <div style="font-size: 2rem; font-weight: 800; color: var(--c-accent); margin: var(--space-lg) 0;">
+    {{ service.nom }}
+  </div>
+  
+  <p style="color: var(--c-text-soft); font-size: 0.9rem; margin-bottom: var(--space-xl);">
+    Catégorie : {{ service.categorie_nom }}<br>
+    Impact estimé : <strong>{{ service.impact_kwh_an }} kWh/an</strong>
+  </p>
+
+  <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
+    <form method="post" action="{{ url_for('main.change_status', service_id=service.id) }}">
+      <input type="hidden" name="statut" value="supprime">
+      <button type="submit" style="font-size: 1.1rem; padding: 0.8rem 1.5rem;">C'est vrai, je le supprime ! 🗑️</button>
+    </form>
+    
+    {% if service.statut == 'actif' %}
+    <form method="post" action="{{ url_for('main.change_status', service_id=service.id) }}">
+      <input type="hidden" name="statut" value="dormant">
+      <button type="submit" class="secondary" style="font-size: 1.1rem; padding: 0.8rem 1.5rem;">Je le mets en pause 😴</button>
+    </form>
+    {% endif %}
+    
+    <a href="{{ url_for('main.flemme') }}" class="btn secondary" style="font-size: 1.1rem; padding: 0.8rem 1.5rem;">Non, un autre ! 🔄</a>
+  </div>
+  
+  <div style="margin-top: var(--space-xl);">
+    <a href="{{ url_for('main.dashboard') }}" style="color: var(--c-text-soft);">← Retourner au tableau de bord</a>
+  </div>
+</div>
+{% endblock %}

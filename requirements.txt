@@ -1,1 +1,5 @@
- 
+# Dépendances Poids Mort Numérique
+# Sobriété : on s'en tient strictement au nécessaire.
+
+Flask==3.0.3          # Micro-framework (~1 Mo) — inclut Jinja2 et Werkzeug
+gunicorn==22.0.0      # Serveur WSGI pour la production (1 dépendance, ~600 Ko)
