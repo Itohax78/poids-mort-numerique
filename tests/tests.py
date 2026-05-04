@@ -196,6 +196,14 @@ class PoidsMortTests(unittest.TestCase):
         r = c.get("/profil/exporter")
         self.assertEqual(r.status_code, 200)
         self.assertIn("text/csv", r.content_type)
+        self.assertIn("charset=utf-8", r.content_type)
+        # BOM UTF-8 en tête : Excel FR détecte alors l'encodage UTF-8.
+        self.assertTrue(r.data.startswith(b"\xef\xbb\xbf"),
+                        "Le CSV doit commencer par le BOM UTF-8")
+        # Séparateur point-virgule (Excel FR), pas la virgule.
+        header_line = r.data.split(b"\n", 1)[0]
+        self.assertIn(b";", header_line)
+        self.assertNotIn(b",", header_line)
         self.assertIn(b"csv_user", r.data)
         self.assertIn(b"MonService", r.data)
         self.assertIn(b"Score", r.data)
@@ -209,6 +217,13 @@ class PoidsMortTests(unittest.TestCase):
         r = c.get("/admin/exporter")
         self.assertEqual(r.status_code, 200)
         self.assertIn("text/csv", r.content_type)
+        self.assertIn("charset=utf-8", r.content_type)
+        # BOM UTF-8 + séparateur ; pour compatibilité Excel FR.
+        self.assertTrue(r.data.startswith(b"\xef\xbb\xbf"),
+                        "Le CSV doit commencer par le BOM UTF-8")
+        header_line = r.data.split(b"\n", 1)[0]
+        self.assertIn(b";", header_line)
+        self.assertNotIn(b",", header_line)
 
     def test_15_export_sans_connexion(self):
         """Export sans session → redirection vers la connexion."""

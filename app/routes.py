@@ -189,8 +189,11 @@ def export_profile():
     stats = models.get_user_stats(user_id)
     services = models.export_services_for_user(user_id)
 
+    # BOM UTF-8 + séparateur ';' pour qu'Excel FR ouvre le fichier
+    # directement, sans assistant d'import (Windows-1252 par défaut sinon).
     buf = io.StringIO()
-    writer = csv.writer(buf)
+    buf.write("\ufeff")
+    writer = csv.writer(buf, delimiter=";")
     writer.writerow([
         "Pseudo", "Email", "Date inscription",
         "Service", "Catégorie", "Statut", "Date ajout",
@@ -494,8 +497,10 @@ def admin_export():
     """Export CSV de tous les utilisateurs et leurs services."""
     rows = models.export_all_users_with_services()
 
+    # BOM UTF-8 + séparateur ';' : compatibilité Excel FR. Voir export_profile.
     buf = io.StringIO()
-    writer = csv.writer(buf)
+    buf.write("\ufeff")
+    writer = csv.writer(buf, delimiter=";")
     writer.writerow([
         "Pseudo", "Email", "Rôle", "Date inscription",
         "Service", "Catégorie", "Statut service", "Date ajout",
