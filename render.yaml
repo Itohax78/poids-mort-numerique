@@ -1,0 +1,27 @@
+# Infrastructure as Code — Render (free tier)
+#
+# Ce fichier permet à Render de provisionner le service automatiquement
+# au premier déploiement. Il décrit un seul service web Python.
+#
+# Choix assumés (free tier, esprit Green IT) :
+#   - plan: free        => pas de serveur 24/7, mise en veille après ~15 min.
+#   - pas de disk persistant => SQLite recréée au cold-start via render_init.py.
+#   - region: frankfurt => infrastructure UE, distance réseau minimale
+#                          depuis la France (moins de transit, moins d'énergie).
+#   - PYTHON_VERSION pinné pour des builds reproductibles.
+
+services:
+  - type: web
+    name: poids-mort-numerique
+    runtime: python
+    plan: free
+    region: frankfurt
+    buildCommand: pip install -r requirements.txt
+    startCommand: python render_init.py && gunicorn app.app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_SECRET_KEY
+        generateValue: true

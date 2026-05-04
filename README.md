@@ -18,7 +18,7 @@ Le site lui-même est conçu pour incarner les principes qu'il promeut : aucun
 framework front-end, aucune police externe, aucun média décoratif, base de données
 fichier, requêtes minimales.
 
-**URL de déploiement** : *(à compléter le jour du déploiement, ex. https://poids-mort-numerique.onrender.com)*
+**URL de déploiement** : `<À COMPLÉTER>` *(ex. https://poids-mort-numerique.onrender.com — voir section 5)*
 
 ## 2. Membres de l'équipe
 
@@ -94,7 +94,67 @@ export FLASK_ENV=production
 gunicorn -w 2 -b 0.0.0.0:8000 app.app:app
 ```
 
-## 5. Structure du dépôt
+## 5. Déploiement (Render — free tier)
+
+Le projet est configuré pour un déploiement *Infrastructure as Code* sur
+[Render](https://render.com) via [`render.yaml`](./render.yaml). Aucune
+configuration manuelle n'est nécessaire au-delà du raccordement du dépôt.
+
+### Étapes
+
+1. **Pousser** le dépôt sur GitHub (branche `main`).
+2. Sur Render : *Dashboard → New + → Blueprint → Connect a repository*,
+   sélectionner `poids-mort-numerique`. Render lit `render.yaml` et
+   provisionne automatiquement un service web Python (plan **free**,
+   région **Frankfurt**).
+3. La variable `FLASK_SECRET_KEY` est générée par Render
+   (`generateValue: true`) — aucun secret n'est committé.
+4. Déploiement automatique à chaque `git push` sur `main`.
+5. **URL publique** : `<À COMPLÉTER après le premier deploy>`
+
+### Que fait le start command ?
+
+```text
+python render_init.py && gunicorn app.app:app
+```
+
+`render_init.py` détecte si la BDD SQLite existe :
+si oui → ne touche à rien ; si non → lance `database/seed.py`
+qui crée le schéma + un jeu de données de démo. Gunicorn prend
+le relais sur le port que Render lui passe (variable `$PORT`, gérée
+par défaut par Gunicorn).
+
+### Choix assumé : SQLite + filesystem éphémère, sans disk persistant
+
+Le plan **free** de Render ne fournit pas de *disk* persistant
+(option payante à partir du plan Starter). Conséquence : à chaque
+*cold-start* (après ~15 min d'inactivité, ou à chaque redéploiement),
+le filesystem est recréé à zéro et la BDD SQLite repart vierge. Le
+script `render_init.py` ré-applique alors le `seed` : les trois
+comptes de démo (admin / alice / bob) sont toujours disponibles.
+
+C'est un compromis **assumé**, cohérent avec la démarche Green IT
+du projet :
+
+- **Pas de serveur de BDD payant qui tourne 24/7** (Postgres managé
+  consomme de la mémoire et de l'énergie en permanence, même sans
+  trafic). SQLite + free tier = ressources allouées **uniquement
+  pendant les requêtes**.
+- **Mise en veille automatique** après inactivité : le service ne
+  consomme rien tant qu'aucun visiteur ne vient. Sobriété native.
+- **Contexte démo / soutenance** : la perte des données utilisateur
+  entre deux sessions est sans conséquence — on évalue
+  l'éco-conception, pas la persistance multi-mois.
+- **Réversible** : passer en plan Starter + disk persistant ou
+  brancher une vraie BDD demande uniquement quelques lignes dans
+  `render.yaml` ; aucun code applicatif à modifier (le chemin BDD
+  est déjà paramétrable via `POIDS_MORT_DB`).
+
+Le coût : un cold-start initial un peu plus long (re-build + seed),
+soit ~10-30 s au premier hit après inactivité. Acceptable pour une
+démo, et inhérent au plan gratuit de tous les PaaS de ce type.
+
+## 6. Structure du dépôt
 
 ```
 poids-mort-numerique/
@@ -131,7 +191,7 @@ poids-mort-numerique/
 └── README.md
 ```
 
-## 6. Conventions de commit
+## 7. Conventions de commit
 
 Format inspiré de Conventional Commits, en français pour la lisibilité :
 
@@ -146,7 +206,7 @@ test(scenarios): ajout du scénario de connexion KO
 Chaque PR fait référence à au moins une issue GitHub et est relue par un autre
 membre de l'équipe avant merge dans `dev`.
 
-## 7. Workflow Git
+## 8. Workflow Git
 
 - `main` : branche stable, protégée, déployée.
 - `dev` : branche d'intégration ; tout y est mergé avant `main`.
@@ -157,13 +217,13 @@ Les Pull Requests sont obligatoires vers `dev` ; au moins un autre membre
 doit valider. Les périodiques merges `dev → main` correspondent aux versions
 stables.
 
-## 8. Documentation et rapport
+## 9. Documentation et rapport
 
 - Cadrage et conception : `docs/livrable1.pdf` (Partie 1)
 - Rapport final, mesures et analyse : `docs/rapport.pdf` (Partie 2)
 - Diagrammes et wireframes : `docs/diagrammes/` et `docs/wireframes/`
 
-## 9. Licence
+## 10. Licence
 
 Projet académique — usage pédagogique. Voir le rapport pour les sources
 externes utilisées (référentiels GR491, ADEME, Collectif GreenIT).
